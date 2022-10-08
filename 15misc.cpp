@@ -38,3 +38,24 @@ int main(){
     return 0;
 }
 */
+
+/*
+Default Arguments (GFG)
+A default argument is a value provided in a function declaration that is automatically assigned by the compiler if the calling function doesn’t provide a value for the argument. In case any value is passed, the default value is overridden.
+#include <iostream>
+using namespace std;
+inline int sum(int a = 5, int b = 0) // default arguments will be used in case arguments are not passed in the function call and 10 will be returned
+{
+    return a + b;
+}
+int main()
+{
+    int a = 0;
+    int b = 0;
+    cin >> a;
+    cin >> b;
+    cout << "sum without default arguments: " << sum(a, b) << endl;
+    cout << "sum with default arguments: " << sum();
+    return 0;
+}
+*/
