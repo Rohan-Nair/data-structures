@@ -920,13 +920,10 @@ int main()
 // Printing subsequences whose sum is K
 #include <bits/stdc++.h>
 using namespace std;
-void subsequences(int *arr, int size, int idx, vector<int> output, int k)
+void subsequences(int *arr, int size, int idx, vector<int> output, int k, int sum)
 {
     if (idx >= size)
     {
-        int sum = 0;
-        for (auto i : output)
-            sum += i;
         if (sum == k)
         {
             for (auto i : output)
@@ -935,13 +932,14 @@ void subsequences(int *arr, int size, int idx, vector<int> output, int k)
         }
         return;
     }
-
-    // excluding
-    subsequences(arr, size, idx + 1, output, k);
     // includng
     output.push_back(arr[idx]);
-    subsequences(arr, size, idx + 1, output, k);
+    sum += arr[idx];
+    subsequences(arr, size, idx + 1, output, k, sum);
     output.pop_back(); // backtracking
+    sum -= arr[idx];
+    // excluding
+    subsequences(arr, size, idx + 1, output, k, sum);
 }
 int main()
 {
@@ -954,8 +952,57 @@ int main()
     int k = 0;
     cin >> k;
     cout << endl;
-    subsequences(arr, size, 0, output, k);
+    subsequences(arr, size, 0, output, k, 0);
     return 0;
+}
+
+// Print numer of subsequences
+#include <bits/stdc++.h>
+using namespace std;
+int subsequences(int *arr, int size, vector<int> &ds, int k, int sum, int idx)
+{
+    if (idx >= size)
+    {
+        if (sum == k)
+            return 1;
+        return 0;
+    }
+
+    // excluding
+    int right = subsequences(arr, size, ds, k, sum, idx + 1);
+    // including
+    ds.push_back(arr[idx]);
+    sum += arr[idx];
+    int left = subsequences(arr, size, ds, k, sum, idx + 1);
+    sum -= arr[idx];
+    ds.pop_back();
+
+    return left + right;
+}
+int main()
+{
+    int size = 0;
+    cin >> size;
+    int *arr = new int[size];
+    for (int i = 0; i < size; i++)
+        cin >> arr[i];
+    vector<int> ds;
+    int k = 0;
+    cin >> k;
+    cout << "the number of subsequences equal to " << k << " are : " << subsequences(arr, size, ds, k, 0, 0);
     return 0;
 }
 */
+#include <iostream>
+using namespace std;
+int main()
+{
+    int n = 0;
+    cin >> n;
+    int *arr = new int[n];
+    for (int i = 0; i < n; i++)
+        cin >> arr[i];
+    cout << *arr + 1;
+    cout << *(arr + 1);
+    return 0;
+}
