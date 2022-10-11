@@ -4,6 +4,7 @@
 Linked list is a linear data structure which does not have contgious memory locations. They are linked using pointers. It is a collection of nodes. A node can n number of data fields and a reference link to the next node in the list.
  */
 
+/*
 // Singly linked list
 // Singly linked liist allows only forward traversal of the list. It is useful for bit integer calculations
 #include <iostream>
@@ -151,7 +152,7 @@ int main()
     cin >> value;
     node *node1 = new node(value);
     // creating a head pointer pointing to the start of the list
-    node *head = node1;
+    node *head = node1; // if there is no node made before creating the head then point the head to null;
     // also creating tail pointer to carry along to the end of the list to insert at tail
     node *tail = node1;
     // a node is now created with the value given by the user and the link pointing to null
@@ -227,5 +228,123 @@ int main()
         deletenodebypos(head, tail, pos);
         print_list(head, tail);
     }
+    return 0;
+}
+
+// -------------------------END OF SINGLY LINKED LIST--------------------------------------
+*/
+
+// Doubly Linked List
+// A doubly linked list comtains a minimum of three fields : previous_link, forward_link, data. The previous link points to the previous node in the linked list. the rest of the fields work the same as singly linked list. Doubly linked list supports forward and backward traversal. Backwared traversal is carried out using the previous_link pointer. A head and tail pointer is always maintained pointing to the start and end of the doubly linked list respoectively. The start and end of the DLL both point to NULL.
+#include <iostream>
+using namespace std;
+class node
+{
+public:
+    int data;
+    node *link; // pointer to point to the forward node
+    node *prev; // pointer to point to the previous node
+
+    // constructor
+    node(int data)
+    {
+        this->data = data;
+        this->link = NULL;
+        this->prev = NULL;
+    }
+};
+
+// function to print the elements of the list
+void print_list(node *&head, node *tail)
+{
+    cout << "---------------------------------" << endl;
+    cout << "printing the values in the list: ";
+    node *ptr = head;   // making a pointer pointing to the start of the list
+    while (ptr != NULL) // till the poiinter doesnt reach the end of the list
+    {
+        cout << ptr->data << " "; // printing the data of the current node
+        ptr = ptr->link;          // going to the next node
+    }
+    cout << endl;
+    cout << "---------------------------------" << endl;
+    cout << "the head is at element: " << head->data << endl;
+    cout << "the tail is at element: " << tail->data << endl;
+    cout << "---------------------------------" << endl;
+}
+
+// function to get the length of the DLL
+int getLength(node *head, node *tail)
+{
+    int len = 0;
+    node *ptr = head;
+    while (ptr != NULL)
+    {
+        len++;
+        ptr = ptr->link;
+    }
+    return len;
+}
+
+// function to insert the value at the start of the DLL
+void insert_at_head(node *&head, node *&tail, int value) // IMP-> Passing head and tail by reference
+{
+    // creating the node to be inserted
+    node *temp = new node(value);
+    // inserting the node
+    temp->link = head; // joining the new node to the start of the list
+    head->prev = temp; // joining the prev of the head to the new node
+    head = temp;       // updating the head to the new start of the DLL
+}
+
+// function to insert the elements at the end of the DLL
+void insert_at_tail(node *&head, node *&tail, int value)
+{
+    // creating the node
+    node *temp = new node(value);
+    // inserting the node
+    temp->prev = tail; // connecting the prev of the node to the end of the list
+    tail->link = temp; // connecting the end of the list to the new node
+    tail = temp;       // updating the tail to the new end of the list
+}
+int main()
+{
+    int value = 0;
+    cout << "enter the value for the node: ";
+    cin >> value;
+    node *node1 = new node(value);
+
+    // creating the head pointer pointing to the first node of the list. (head will point to null if there is no node already present in the list)
+    node *head = node1;
+    // creating the tail pointer also pointing to the first node of the list (same for tail)
+    node *tail = node1;
+
+    cout << "the length of the linked list is :" << getLength(head, tail) << endl; // the length cannot be foudn by subtracting the tail from the head like in an array as the memory locations are not contigious in a linked list
+
+    // inserting n nodes into the linkes list
+    int n = 0;
+    cout << "enter the number of nodes to be inserted into the list: ";
+    cin >> n;
+    for (int i = 0; i < n; i++)
+    {
+        int tempvalue = 0;
+        cout << "enter the value to add at the start of the list: ";
+        cin >> tempvalue;
+        insert_at_head(head, tail, tempvalue);
+    }
+    print_list(head, tail);
+
+    cout << endl;
+    n = 0;
+    cout << "enter the number of nodes to be inserted at the end of the list: ";
+    cin >> n;
+    cout << endl;
+    for (int i = 0; i < n; i++)
+    {
+        int tempvalue = 0;
+        cout << "enter the value to add to the end of the list: ";
+        cin >> tempvalue;
+        insert_at_tail(head, tail, tempvalue);
+    }
+    print_list(head, tail);
     return 0;
 }
