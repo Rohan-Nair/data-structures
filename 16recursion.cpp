@@ -464,7 +464,6 @@ int main()
 
 /*
 // Day - 5
-*/
 // Merge sort
 // Merge sort: Divide the array into two parts like in binary search. Use recursion to keep dividing the arrays. Merge the divided arrays in the sorted form recursively to get the entire sorted array. This sorting algorithm is faster than bubble sort, insertion sort and selection sort. It has the same time complexity (O(nlogn)) for all three cases best, avg, worst. It has a space complexity of O(n).
 #include <iostream>
@@ -505,6 +504,10 @@ void merge(int *arr, int start, int end)
         arr[mainidx++] = arr1[idx1++];
     while (idx2 < size2)
         arr[mainidx++] = arr2[idx2++];
+
+    // freeing the memory after usage
+    delete[] arr1;
+    delete[] arr2;
 }
 void mergesort(int *arr, int start, int end)
 {
@@ -542,3 +545,417 @@ int main()
     }
     return 0;
 }
+*/
+
+/*
+Day - 6
+// Quick Sort
+In Quick Sort an element is selected and placed in its right place in the final sorted array. all the elements to the left of the selected elements will be smaller or equal to and all the elements to the right will be greater than or equal to. This is called as partioning.
+
+Quick sort : Start from the leftmost element and keep track of the index of smaller (or equal to) elements as i. While traversing, if we find a smaller element, we swap the current element with arr[i]. Otherwise, we ignore the current element.
+
+pseudo code
+partition (array , start, end)
+{
+    pivot = end element
+    one pointer at the start (j) and one before it (i)
+    iterate j till p - 1 (second last element)
+        if arr[j] <= pivot
+            i++;
+            swap arr[j], arr[i];
+        if arr[j] > pivot
+            j++;
+    swap arr[j], arr[[pivot]]
+
+
+}
+quicksort (array, start ,end)
+{
+    //base case
+    if (start >= end)
+        return;
+    // partitioning
+    pivot = partition(array, start, end);
+    // recursion
+    quicksort (arr, start, pivot - 1);
+    quicksort (arr, pivot + 1, end);
+
+}
+
+
+// ----------------------------CODE----------------------------
+#include <iostream>
+using namespace std;
+int partition(int *arr, int start, int end)
+{
+    int pivot = arr[end]; // setting the pivot to the last element
+    int i = start - 1;
+    int j = start;
+    for (j; j < end; j++)
+    {
+        if (arr[j] <= pivot)
+        {
+            // if the current element is less than or equal to the pivot then increment i and swap the elements at i and j
+            i++;
+            swap(arr[i], arr[j]);
+        }
+    }
+    swap(arr[i + 1], arr[j]); // putting the pivot element in its correct place in the final sorted array
+    return (i + 1);           // returning the index at where the pivot element is located in the final sorted array
+}
+void quicksort(int *arr, int start, int end)
+{
+    if (start >= end)
+        return;
+    if (start < end)
+    {
+        // finding the partition
+        int partitionidx = partition(arr, start, end);
+        // sorting the elements to the left of the partition
+        quicksort(arr, start, partitionidx - 1);
+        // sorting the elements to the right of the partition
+        quicksort(arr, partitionidx + 1, end);
+    }
+}
+int main()
+{
+    int size = 0;
+    cout << "enter the size of the array : ";
+    cin >> size;
+    // allocating memory dynamically for the array
+    int *arr = new int[size];
+    // taking input in the array
+    for (int i = 0; i < size; i++)
+        cin >> arr[i];
+    cout << endl;
+    // printing the array before sorting
+    cout << "before sorting: " << endl;
+    for (int i = 0; i < size; i++)
+        cout << arr[i] << "\t";
+    // applying quicksort to sort the array
+    quicksort(arr, 0, size - 1);
+    cout << endl;
+    // printing the final sorted array
+    cout << "after sorting: " << endl;
+    for (int i = 0; i < size; i++)
+        cout << arr[i] << "\t";
+    return 0;
+}
+// ----------------------------CODE END----------------------------
+*/
+
+/*
+Day - 7
+// Subsets (Leetcode)
+// subsequences of a string (Leetcode)
+*/
+
+/*
+Day - 8
+// Letter combinations of a phone (Leetcode)
+*/
+
+/*
+Day - 9
+// Permutations of a string (Leetcode)
+*/
+
+/* Striver Recursion */
+
+/*
+// Print name 5 times
+#include <iostream>
+using namespace std;
+void print(string name, int k)
+{
+    // base case
+    if (k == 0)
+        return;
+
+    cout << name << endl;
+    print(name, --k);
+}
+int main()
+{
+    string name = "rohan";
+    int k = 0;
+    cin >> k;
+    print(name, k);
+    return 0;
+}
+
+// Print from 1 to n linearly
+#include <iostream>
+using namespace std;
+void print(int start, int n)
+{
+    if (start > n)
+        return;
+    cout << start << " ";
+    print(++start, n);
+}
+int main()
+{
+    int n = 0;
+    cin >> n;
+    int start = 1;
+    print(start, n);
+    return 0;
+}
+
+// Print from n to 1 linearly
+#include <iostream>
+using namespace std;
+void print(int n)
+{
+    if (n <= 0)
+        return;
+    cout << n << " ";
+    print(--n);
+}
+int main()
+{
+    int n = 0;
+    cin >> n;
+    print(n);
+    return 0;
+}
+
+// Print from 1 to n using backtracking (cant use ++i)
+#include <iostream>
+using namespace std;
+void print(int n, int i)
+{
+    if (i <= 0)
+        return;
+    print(n, --n);
+    cout << n << " ";
+}
+int main()
+{
+    int n = 0;
+    cin >> n;
+    print(n, n);
+    return 0;
+}
+
+// Print fromt n to 1 using backtracking
+#include <iostream>
+using namespace std;
+void print(int i, int n)
+{
+    if (i > n)
+        return;
+
+    print(i + 1, n);
+    cout << i << " ";
+}
+int main()
+{
+    int n = 0;
+    cin >> n;
+    print(1, n);
+    return 0;
+}
+
+// sum of n numbers (parameterized)
+#include <iostream>
+using namespace std;
+void summing(int i, int sum)
+{
+    if (i < 0)
+    {
+        cout << sum;
+        return;
+    }
+    summing(i - 1, sum + i);
+}
+int main()
+{
+    int n = 0;
+    cin >> n;
+    summing(n, 0);
+    return 0;
+}
+
+// sum of n numbers (functional)
+#include <iostream>
+using namespace std;
+int summing(int n)
+{
+    if (n == 0)
+        return 0;
+    return n += summing(n - 1);
+
+}
+int main()
+{
+    int n = 0;
+    cin >> n;
+    cout << summing(n);
+    return 0;
+}
+
+// Factorial of n numbers
+#include <iostream>
+using namespace std;
+int fact(int n)
+{
+    if (n == 1)
+        return 1;
+    return n *= fact(n - 1);
+
+}
+int main()
+{
+    int n = 0;
+    cin >> n;
+    cout << fact(n);
+    return 0;
+}
+
+// Reverse an array using recursion
+#include <iostream>
+using namespace std;
+void rev(int *arr, int i, int j)
+{
+    if (i >= j)
+        return;
+    swap(arr[i], arr[j]);
+    (arr, i + 1, j - 1);
+}
+int main()
+{
+    int size = 0;
+    cin >> size;
+    int *arr = new int[size];
+    for (int i = 0; i < size; i++)
+    {
+        cin >> arr[i];
+    }
+    rev(arr, 0, size - 1);
+    cout << endl;
+    for (int i = 0; i < size; i++)
+    {
+        cout << arr[i] << " ";
+    }
+    return 0;
+}
+
+// Check Palindrome
+#include <iostream>
+using namespace std;
+bool isPalindrome(string s, int i)
+{
+    if (i >= s.length() / 2)
+        return true;
+    if (s[i] != s[s.length() - i - 1])
+        return false;
+    return isPalindrome(s, i + 1);
+}
+int main()
+{
+    string s = "";
+    cin >> s;
+    isPalindrome(s, 0) ? cout << "is" : cout << "isn't";
+    return 0;
+}
+
+// Multiple Recursion Calls
+// Fibonacci number (Printing the nth fibo number) (using multiple function calls)
+#include <iostream>
+using namespace std;
+int fibo(int n)
+{
+    if (n == 0 || n == 1)
+    {
+        cout << n << " ";
+        return n;
+    }
+    int last = fibo(n - 1);
+    int second_last = fibo(n - 2);
+    return last + second_last;
+}
+int main()
+{
+    int n = 0;
+    cin >> n;
+    cout << fibo(n);
+    return 0;
+}
+
+// Printing the Subsequences of an array
+#include <bits/stdc++.h>
+using namespace std;
+void subsequences(int *arr, int size, int idx, vector<int> output)
+{
+    if (idx == size)
+    {
+        cout << "{";
+        for (auto i : output)
+            cout << i;
+        cout << "}";
+        cout << endl;
+        return;
+    }
+    // excluding
+    subsequences(arr, size, idx + 1, output);
+    // including
+    output.push_back(arr[idx]);
+    subsequences(arr, size, idx + 1, output);
+    output.pop_back(); //backtracking
+}
+int main()
+{
+    int size = 0;
+    cin >> size;
+    int *arr = new int[size];
+    for (int i = 0; i < size; i++)
+        cin >> arr[i];
+    vector<int> output;
+    subsequences(arr, size, 0, output);
+    return 0;
+}
+
+// Printing subsequences whose sum is K
+#include <bits/stdc++.h>
+using namespace std;
+void subsequences(int *arr, int size, int idx, vector<int> output, int k)
+{
+    if (idx >= size)
+    {
+        int sum = 0;
+        for (auto i : output)
+            sum += i;
+        if (sum == k)
+        {
+            for (auto i : output)
+                cout << i << " ";
+            cout << endl;
+        }
+        return;
+    }
+
+    // excluding
+    subsequences(arr, size, idx + 1, output, k);
+    // includng
+    output.push_back(arr[idx]);
+    subsequences(arr, size, idx + 1, output, k);
+    output.pop_back(); // backtracking
+}
+int main()
+{
+    int size = 0;
+    cin >> size;
+    int *arr = new int[size];
+    for (int i = 0; i < size; i++)
+        cin >> arr[i];
+    vector<int> output;
+    int k = 0;
+    cin >> k;
+    cout << endl;
+    subsequences(arr, size, 0, output, k);
+    return 0;
+    return 0;
+}
+*/
