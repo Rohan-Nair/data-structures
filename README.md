@@ -1,3 +1,3 @@
 # data-structures
 
-git repo for all dsa 
+git repo for dsa 
